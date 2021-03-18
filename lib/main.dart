@@ -48,13 +48,11 @@ class FormularioTransferencia extends StatelessWidget {
   }
 
   void _criarTransferencia() {
-    final int accountNumber =
-        int.tryParse(_controllerInputNumberAccount.text);
+    final int accountNumber = int.tryParse(_controllerInputNumberAccount.text);
     final double value = double.tryParse(_controllerInputValue.text);
 
     if (accountNumber != null && value != null) {
-      final newTransfer =
-          Transferencia(value, accountNumber.toString());
+      final newTransfer = Transferencia(value, accountNumber.toString());
       debugPrint(newTransfer.toString());
     }
   }
@@ -81,8 +79,7 @@ class Editor extends StatelessWidget {
         decoration: InputDecoration(
             icon: icone != null ? Icon(icone) : null,
             labelText: rotulo,
-            hintText: dica
-        ),
+            hintText: dica),
       ),
     );
   }
