@@ -7,7 +7,7 @@ class BytebankApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: FormularioTransferencia(),
+        body: ListaTransferencia(),
       ),
     );
   }
@@ -39,7 +39,7 @@ class FormularioTransferencia extends StatelessWidget {
           ),
           // ignore: deprecated_member_use
           RaisedButton(
-            onPressed: () => _criarTransferencia(),
+            onPressed: () => _criarTransferencia(context),
             child: Text('confirmar'),
           ),
         ],
@@ -47,13 +47,16 @@ class FormularioTransferencia extends StatelessWidget {
     );
   }
 
-  void _criarTransferencia() {
+  void _criarTransferencia(BuildContext context) {
     final int accountNumber = int.tryParse(_controllerInputNumberAccount.text);
     final double value = double.tryParse(_controllerInputValue.text);
 
     if (accountNumber != null && value != null) {
-      final newTransfer = Transferencia(value, accountNumber.toString());
-      debugPrint(newTransfer.toString());
+      final transferenciaCriada = Transferencia(value, accountNumber.toString());
+      debugPrint('Criando transferência');
+      //debugPrint(transferenciaCriada.toString());
+      debugPrint('$transferenciaCriada');
+      Navigator.pop(context, transferenciaCriada);
     }
   }
 }
@@ -99,7 +102,16 @@ class ListaTransferencia extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          final Future<Transferencia> future = Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => FormularioTransferencia()));
+          future.then((transferenciaRecebida) {
+            debugPrint('Transferência recebida');
+            debugPrint('$transferenciaRecebida');
+          });
+        },
         child: Icon(Icons.add),
       ),
     );
@@ -130,6 +142,6 @@ class Transferencia {
 
   @override
   String toString() {
-    return 'Transferência \n valor: $value, número da conta: $accountNumber}';
+    return 'valor: $value, número da conta: $accountNumber}';
   }
 }
