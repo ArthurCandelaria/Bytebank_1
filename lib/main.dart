@@ -52,7 +52,8 @@ class FormularioTransferencia extends StatelessWidget {
     final double value = double.tryParse(_controllerInputValue.text);
 
     if (accountNumber != null && value != null) {
-      final transferenciaCriada = Transferencia(value, accountNumber.toString());
+      final transferenciaCriada =
+          Transferencia(value, accountNumber.toString());
       debugPrint('Criando transferência');
       //debugPrint(transferenciaCriada.toString());
       debugPrint('$transferenciaCriada');
